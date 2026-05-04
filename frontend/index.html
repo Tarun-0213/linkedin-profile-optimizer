@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Profile Optimizer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🔗 LinkedIn Profile Optimizer</h1>
+                <p class="tagline">Elevate Your Professional Presence</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="section-card">
+                    <h2>Analyze Your Profile</h2>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="currentTitle">Current Title *</label>
+                                <input type="text" id="currentTitle" placeholder="Software Engineer" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="industry">Industry *</label>
+                                <input type="text" id="industry" placeholder="Technology" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="headline">Headline</label>
+                            <input type="text" id="headline" placeholder="Your current LinkedIn headline...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="summary">About/Summary *</label>
+                            <textarea id="summary" placeholder="Write your professional summary..." rows="6" required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="experience">Years of Experience *</label>
+                                <input type="number" id="experience" min="0" placeholder="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="skills">Key Skills</label>
+                                <input type="text" id="skills" placeholder="Python, JavaScript, MongoDB (comma-separated)">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Analyze Profile</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section" style="display: none;">
+                <!-- Score Card -->
+                <div class="score-card">
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <span class="score-number" id="overallScore">0</span>
+                            <span class="score-label">/100</span>
+                        </div>
+                        <div class="score-details">
+                            <h3>Overall Profile Score</h3>
+                            <p id="scoreMessage">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>Headline Quality</h4>
+                        <div class="metric-bar">
+                            <div class="metric-fill" id="headlineScore" style="width: 0%;"></div>
+                        </div>
+                        <p id="headlineText">0/100</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Summary Quality</h4>
+                        <div class="metric-bar">
+                            <div class="metric-fill" id="summaryScore" style="width: 0%;"></div>
+                        </div>
+                        <p id="summaryText">0/100</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Completeness</h4>
+                        <div class="metric-bar">
+                            <div class="metric-fill" id="completenessScore" style="width: 0%;"></div>
+                        </div>
+                        <p id="completenessText">0/100</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Keyword Optimization</h4>
+                        <div class="metric-bar">
+                            <div class="metric-fill" id="keywordScore" style="width: 0%;"></div>
+                        </div>
+                        <p id="keywordText">0/100</p>
+                    </div>
+                </div>
+
+                <!-- Recommendations Section -->
+                <div class="section-card recommendations-card">
+                    <h3>📋 Recommendations for Improvement</h3>
+                    <div id="recommendationsList" class="recommendations-list">
+                        <!-- Recommendations will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Keyword Suggestions -->
+                <div class="section-card keywords-card">
+                    <h3>🔑 Suggested Keywords</h3>
+                    <div id="keywordsList" class="keywords-list">
+                        <!-- Keywords will be populated here -->
+                    </div>
+                </div>
+
+                <!-- New Analysis Button -->
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">Start New Analysis</button>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 LinkedIn Profile Optimizer | Made with ❤️ by Tarun-0213</p>
+        </footer>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p>Analyzing your profile...</p>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/analyzer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
