@@ -21,48 +21,75 @@
         <main class="main-content">
             <!-- Input Section -->
             <section class="input-section">
-                <div class="section-card">
-                    <h2>Analyze Your Profile</h2>
-                    <form id="profileForm">
-                        <div class="form-group">
-                            <label for="fullName">Full Name *</label>
-                            <input type="text" id="fullName" placeholder="John Doe" required>
-                        </div>
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('urlTab')">📎 Paste LinkedIn URL</button>
+                    <button class="tab-btn" onclick="switchTab('manualTab')">✏️ Manual Input</button>
+                </div>
 
-                        <div class="form-row">
+                <!-- URL Input Form -->
+                <div id="urlTab" class="tab-content active">
+                    <div class="section-card">
+                        <h2>Analyze Using LinkedIn URL</h2>
+                        <p class="info-text">Paste your LinkedIn profile URL below. We'll automatically extract your profile information.</p>
+                        <form id="urlForm">
                             <div class="form-group">
-                                <label for="currentTitle">Current Title *</label>
-                                <input type="text" id="currentTitle" placeholder="Software Engineer" required>
+                                <label for="linkedinUrl">LinkedIn Profile URL *</label>
+                                <input type="url" id="linkedinUrl" 
+                                       placeholder="https://www.linkedin.com/in/yourprofile" 
+                                       required>
+                                <small class="helper-text">Example: https://www.linkedin.com/in/john-doe-12345/</small>
                             </div>
+                            <button type="submit" class="btn btn-primary">Extract & Analyze Profile</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Manual Input Form -->
+                <div id="manualTab" class="tab-content">
+                    <div class="section-card">
+                        <h2>Analyze Your Profile</h2>
+                        <form id="profileForm">
                             <div class="form-group">
-                                <label for="industry">Industry *</label>
-                                <input type="text" id="industry" placeholder="Technology" required>
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" placeholder="John Doe" required>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="headline">Headline</label>
-                            <input type="text" id="headline" placeholder="Your current LinkedIn headline...">
-                        </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="currentTitle">Current Title *</label>
+                                    <input type="text" id="currentTitle" placeholder="Software Engineer" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="industry">Industry *</label>
+                                    <input type="text" id="industry" placeholder="Technology" required>
+                                </div>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="summary">About/Summary *</label>
-                            <textarea id="summary" placeholder="Write your professional summary..." rows="6" required></textarea>
-                        </div>
-
-                        <div class="form-row">
                             <div class="form-group">
-                                <label for="experience">Years of Experience *</label>
-                                <input type="number" id="experience" min="0" placeholder="5" required>
+                                <label for="headline">Headline</label>
+                                <input type="text" id="headline" placeholder="Your current LinkedIn headline...">
                             </div>
-                            <div class="form-group">
-                                <label for="skills">Key Skills</label>
-                                <input type="text" id="skills" placeholder="Python, JavaScript, MongoDB (comma-separated)">
-                            </div>
-                        </div>
 
-                        <button type="submit" class="btn btn-primary">Analyze Profile</button>
-                    </form>
+                            <div class="form-group">
+                                <label for="summary">About/Summary *</label>
+                                <textarea id="summary" placeholder="Write your professional summary..." rows="6" required></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="experience">Years of Experience *</label>
+                                    <input type="number" id="experience" min="0" placeholder="5" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="skills">Key Skills</label>
+                                    <input type="text" id="skills" placeholder="Python, JavaScript, MongoDB (comma-separated)">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Analyze Profile</button>
+                        </form>
+                    </div>
                 </div>
             </section>
 
@@ -145,6 +172,14 @@
     <div id="loadingSpinner" class="loading-spinner" style="display: none;">
         <div class="spinner"></div>
         <p>Analyzing your profile...</p>
+    </div>
+
+    <!-- Error Alert -->
+    <div id="errorAlert" class="error-alert" style="display: none;">
+        <div class="alert-content">
+            <span class="alert-close" onclick="closeAlert()">&times;</span>
+            <p id="errorMessage"></p>
+        </div>
     </div>
 
     <script src="js/api.js"></script>

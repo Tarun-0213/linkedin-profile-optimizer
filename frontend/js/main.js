@@ -3,20 +3,114 @@
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('profileForm');
+    const urlForm = document.getElementById('urlForm');
     
-    // Form submission
+    // Manual form submission
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         await analyzeProfile();
     });
+
+    // URL form submission
+    urlForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await analyzeProfileFromURL();
+    });
 });
 
-// Analyze profile function
+// Switch between tabs
+function switchTab(tabName) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(tab => tab.classList.remove('active'));
+
+    // Remove active class from all buttons
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => btn.classList.remove('active'));
+
+    // Show selected tab
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
+}
+
+// Analyze profile from URL
+async function analyzeProfileFromURL() {
+    const url = document.getElementById('linkedinUrl').value;
+
+    // Validate URL format
+    if (!isValidLinkedInURL(url)) {
+        showError('Please enter a valid LinkedIn profile URL');
+        return;
+    }
+
+    showLoadingSpinner();
+
+    try {
+        // Extract profile data from URL
+        const profileData = await extractLinkedInProfile(url);
+        
+        if (!profileData) {
+            showError('Unable to extract profile data. Please try the Manual Input tab.');
+            return;
+        }
+
+        // Analyze the extracted profile
+        const response = await analyzeProfileAPI(profileData);
+        displayResults(response);
+        
+        // Scroll to results
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Error analyzing profile. Please try again.');
+    } finally {
+        hideLoadingSpinner();
+    }
+}
+
+// Validate LinkedIn URL
+function isValidLinkedInURL(url) {
+    const linkedinRegex = /^https?:\/\/(www\.)?linkedin\.com\/in\/[\w\-]+\/?$/i;
+    return linkedinRegex.test(url);
+}
+
+// Extract LinkedIn profile data from URL (using LinkedIn's public API or scraping simulation)
+async function extractLinkedInProfile(url) {
+    try {
+        // In a real scenario, you would:
+        // 1. Use LinkedIn API (requires OAuth)
+        // 2. Or use a scraping library
+        // 3. Or ask user to paste their profile data
+
+        // For now, we'll use a backend endpoint that handles this
+        const response = await fetch('http://localhost:5000/api/extract-profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: url })
+        });
+
+        if (response.ok) {
+            return await response.json();
+        } else {
+            // Fallback: Show a helpful message
+            showError('To analyze a LinkedIn profile:\n1. Open your LinkedIn profile\n2. Copy your About section, headline, and skills\n3. Use the Manual Input tab');
+            return null;
+        }
+    } catch (error) {
+        console.error('Extract profile error:', error);
+        // Fallback: Use manual input
+        return null;
+    }
+}
+
+// Analyze profile function (manual input)
 async function analyzeProfile() {
     // Get form data
     const profileData = {
-        fullName: document.getElementById('fullName').value,
-        currentTitle: document.getElementById('currentTitle').value,
+        full_name: document.getElementById('fullName').value,
+        current_title: document.getElementById('currentTitle').value,
         industry: document.getElementById('industry').value,
         headline: document.getElementById('headline').value,
         summary: document.getElementById('summary').value,
@@ -25,9 +119,9 @@ async function analyzeProfile() {
     };
 
     // Validate form
-    if (!profileData.fullName || !profileData.currentTitle || !profileData.industry || 
+    if (!profileData.full_name || !profileData.current_title || !profileData.industry || 
         !profileData.summary || !profileData.experience) {
-        alert('Please fill in all required fields!');
+        showError('Please fill in all required fields!');
         return;
     }
 
@@ -42,7 +136,7 @@ async function analyzeProfile() {
         displayResults(response);
     } catch (error) {
         console.error('Error:', error);
-        alert('Error analyzing profile. Please try again.');
+        showError('Error analyzing profile. Please try again.');
     } finally {
         // Hide loading spinner
         hideLoadingSpinner();
@@ -143,9 +237,27 @@ function hideLoadingSpinner() {
     document.getElementById('loadingSpinner').style.display = 'none';
 }
 
+// Show error alert
+function showError(message) {
+    const errorAlert = document.getElementById('errorAlert');
+    document.getElementById('errorMessage').textContent = message;
+    errorAlert.style.display = 'block';
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+        closeAlert();
+    }, 5000);
+}
+
+// Close error alert
+function closeAlert() {
+    document.getElementById('errorAlert').style.display = 'none';
+}
+
 // Reset form
 function resetForm() {
     document.getElementById('profileForm').reset();
+    document.getElementById('urlForm').reset();
     document.getElementById('resultsSection').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }

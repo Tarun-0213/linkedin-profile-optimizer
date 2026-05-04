@@ -60,6 +60,62 @@ body {
     margin-bottom: 40px;
 }
 
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 20px;
+    border: 2px solid var(--border-color);
+    background: white;
+    color: var(--text-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.tab-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Section Cards */
 .section-card {
     background: white;
@@ -70,7 +126,7 @@ body {
 
 .section-card h2 {
     color: var(--primary-color);
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     font-size: 1.8em;
 }
 
@@ -78,6 +134,12 @@ body {
     color: var(--primary-color);
     margin-bottom: 20px;
     font-size: 1.3em;
+}
+
+.info-text {
+    color: var(--text-light);
+    margin-bottom: 20px;
+    font-size: 0.95em;
 }
 
 /* Forms */
@@ -100,6 +162,7 @@ label {
 
 input[type="text"],
 input[type="number"],
+input[type="url"],
 textarea,
 select {
     width: 100%;
@@ -113,6 +176,7 @@ select {
 
 input[type="text"]:focus,
 input[type="number"]:focus,
+input[type="url"]:focus,
 textarea:focus,
 select:focus {
     outline: none;
@@ -122,6 +186,13 @@ select:focus {
 
 textarea {
     resize: vertical;
+}
+
+.helper-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: var(--text-light);
 }
 
 /* Buttons */
@@ -192,6 +263,7 @@ textarea {
     align-items: center;
     justify-content: center;
     border: 3px solid white;
+    flex-shrink: 0;
 }
 
 .score-number {
@@ -331,6 +403,44 @@ textarea {
 .loading-spinner p {
     color: white;
     font-size: 1.2em;
+}
+
+/* Error Alert */
+.error-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--danger-color);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1001;
+    min-width: 300px;
+    animation: slideIn 0.3s ease;
+}
+
+.alert-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-close {
+    cursor: pointer;
+    font-size: 1.5em;
+    margin-left: 15px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* Footer */
