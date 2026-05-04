@@ -20,12 +20,13 @@ mongo = PyMongo(app)
 CORS(app)
 
 # Import routes
-from routes import analyze_routes, profile_routes, recommendations_routes
+from routes import analyze_routes, profile_routes, recommendations_routes, extract_routes
 
 # Register blueprints
 app.register_blueprint(analyze_routes.bp)
 app.register_blueprint(profile_routes.bp)
 app.register_blueprint(recommendations_routes.bp)
+app.register_blueprint(extract_routes.bp)
 
 # Health check endpoint
 @app.route('/health', methods=['GET'])
